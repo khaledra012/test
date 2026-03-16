@@ -1,0 +1,27 @@
+name: Express CI Pipeline
+
+# 1. متى يستيقظ الروبوت؟ (The Trigger)
+on:
+  push:
+    branches:
+      - main
+      - staging
+  pull_request:
+    branches:
+      - main
+
+# 2. ماذا سيفعل الروبوت؟ (The Jobs)
+jobs:
+  build-and-test:
+    # تحديد نوع نظام التشغيل للسيرفر المؤقت
+    runs-on: ubuntu-latest
+
+    # 3. الخطوات التفصيلية (The Steps)
+    steps:
+      # الخطوة الأولى: تنزيل الكود من المستودع إلى السيرفر المؤقت
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # الخطوة الثانية: تجربة بناء حاوية الدوكر للتأكد من خلو الكود من الأخطاء
+      - name: Build Docker Image
+        run: docker build -t express-cicd-hero .
